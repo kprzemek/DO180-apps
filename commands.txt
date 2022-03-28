@@ -8,6 +8,6 @@ podman exec -it mysql-basic /bin/bash -c 'mysql -uuser1 -pmypa55 items </db.sql'
 
 curl -Ls https://quay.io/v2/redhattraining/httpd-parent/tags/list | python3 -m json.tool
 
-curl -u='5883743|PrzemyslawKuznickiLP':'ey...dsferg' -Ls "https://sso.redhat.com/auth/realms/rhcc/protocol/redhat-docker-v2/auth?service=docker-registry" | python3 -m json.tool
+curl -u='5883743|PrzemyslawKuznickiLP':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJiNjRiMGMxOTU2MjI0ZDVjYjlhMWE4MTE4MGYwN2RmNiJ9.SHjoJbAK4USZozMg9NAnXOpvAGV9DnO3O1b0MxfqT2YYakIkTn0Lm34hR_4OcDSDX5FN9oXjZnMXapFRokj0yjCUH8QMPNKOln3EI-zb4w_0crww7UK-7FXGSNRsyQkaTv5qA2rhRzh4S_67Ew91GOvm4_dzLrvGDawDkASdnhv70v5ts3YC2aF-Rv-yVmANsLWpGyYJub2-outFcRM4FSDD-IL_X7-HnbvB9KMgQSNFbR5UtG9ugDwWhEmNcHImY2dbRKuHUXXvAv7NYoQl1u6SQmHzDFbRAmbSL127HIONJIM834VgC2uHdHg-0erS8CTLU5VxbGuowS7-Tm5fgAPHWoC6SzyXS4SK1dgHG4UwiQAsOrHb7b0YvJa3i9LA33fl0WX3gNWVruYaeIiJXyIBn-1i5M-UG0seryJRCdmF2ZIAbaGI8BNoLVMTK1wme1NZdrgaYhxNJOjFEZ8hqm3_9hPaP1T5CfHgf4KG_aQ7EXHnHayXdVEhrd4venshVIJIJQDnZ09hy-c8gv-TgbAtw3UT01Mims9Kk_2YMCWQV_4t3ShcSgMqgso1EgfgrNy8BjHZ4FEEF3oYGlMvaZVFH3ausfEsFSYp52lDZt473G8UyaAdS2O6MPKHO5tvkfTRsx-dqB-hRlI3Qu2s9aTtLS54uel6UYcLIYz2Hbc' -Ls "https://sso.redhat.com/auth/realms/rhcc/protocol/redhat-docker-v2/auth?service=docker-registry" | python3 -m json.tool
 
 curl -H "Authorization: Bearer wklejamy_access_token" -Ls https://registry.redhat.io/v2/rhel8/mysql-80/tags/list | python3 -m json.tool
