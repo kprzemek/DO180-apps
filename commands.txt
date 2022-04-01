@@ -40,7 +40,8 @@ oc set volumes deployment/postgresql-persistent \
 
 Chapter 10:
 -----------
- Cert kubeconfig lifetime:
+Certy są na maszynie UTILITY w /home/lab/ocp4/auth/kubeconfig
+Cert kubeconfig lifetime:
   grep 'client-certificate-data' kubeconfig |awk '{print $2}' | base64 -d | openssl x509 -text
 
  oc adm policy add-cluster-role-to-user cluster-admin przem
@@ -63,11 +64,31 @@ Chapter 10:
 Chapter 11:
 -----------
 oc create secret generic przem-secret --from-literal key1=SZKOLENIE --from-literal key2=DO285
-oc set env deployment/httpd --from secret/przem-secret --prefix PRZEM_
-oc set volume deployment/httpd --add --type secret --secret-name przem-secret --mount-path /przem-secrets
+oc set env deployment.apps/httpd --from secret/przem-secret --prefix PRZEM_
+oc set volume deployment.apps/httpd --add --type secret --secret-name przem-secret --mount-path /przem-secrets
 
 USUNIECIE ZMIENNYCH:
-oc set env deployment.apps/httpd ZMIENNA1- ZMIENNA2-
+oc set env deployment.apps/httpd PRZEM_KEY1- PRZEM_KEY2-
 
 USUNIECIE VOLUMENU:
 oc set volume deployment.apps/httpd --name NAZWA_z_describe_deploumentu --remove
+
+SCC:
+oc get pod httpd-7457899db7-t9jmk -o yaml |oc adm policy scc-subject-review -f -
+oc create serviceaccount przem-root
+oc adm policy add-scc-to-user anyuid -z przem-root
+oc set serviceaccount deployment.apps/httpd przem-root
+
+Chapter 12:
+-----------
+selfSignet Certy dla route:
+oc create route edge --service srv_name
+
+Chapter 13:
+-----------
+oc label node master01 env=dev
+oc patch deployment.apps/sample --patch '{"spec":{"template":{"spec":{"nodeSelector":{"env":"dev"}}}}}'
+oc adm new-project demo --node-selector "env=dev"
+oc annotate namespace demo openshift.io/node-selector="env=prod" --overwrite
+oc scale --replicas 3 deployment.apps/sample
+
