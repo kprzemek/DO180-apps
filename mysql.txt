@@ -1,0 +1,21 @@
+podman run --name mysql-basic  -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 -d registry.redhat.io/rhel8/mysql-80:1 
+CREATE TABLE Projects (id int NOT NULL, name varchar(255) DEFAULT NULL, code varchar(255) DEFAULT NULL, PRIMARY KEY (id));
+INSERT into Projects (id, name, code) values (1,'DevOps','DO180');
+podman run --name persist-db -d -v /home/student/dbfiles:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+
+podman cp /home/student/DO180/labs/manage-lifecycle/db.sql mysql-basic:/
+podman exec -it mysql-basic /bin/bash -c 'mysql -uuser1 -pmypa55 items </db.sql'
+
+curl -Ls https://quay.io/v2/redhattraining/httpd-parent/tags/list | python3 -m json.tool
+
+curl -u='5883743|PrzemyslawKuznickiLP':'ey...dsferg' -Ls "https://sso.redhat.com/auth/realms/rhcc/protocol/redhat-docker-v2/auth?service=docker-registry" | python3 -m json.tool
+
+curl -H "Authorization: Bearer wklejamy_access_token" -Ls https://registry.redhat.io/v2/rhel8/mysql-80/tags/list | python3 -m json.tool
+
+oc new-app --image-stream php:7.3~https://github.com/kprzemek/DO180-apps --context-dir php-helloworld --name php-helloworld
+
+Chapter 6:
+mysql -uuser1 -pmypa55 --protocol tcp -h localhost testdb </home/student/DO180/labs/manage-lifecycle/db.sql 
+mysql -uuser1 -pmypa55 --protocol tcp -h localhost testdb -e 'select * from Projects;'
+mysql -uuser1 -pmypa55 --protocol tcp -h localhost testdb (w srodku: drop table Projects; )
+
