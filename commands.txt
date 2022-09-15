@@ -11,6 +11,36 @@ podman run --name persist-db -d -v /home/student/dbfiles:/var/lib/mysql/data -e 
 podman cp /home/student/DO180/labs/manage-lifecycle/db.sql mysql-basic:/
 podman exec -it mysql-basic /bin/bash -c 'mysql -uuser1 -pmypa55 items </db.sql'
 
+PODMAN:
+=======
+Binding do interace, zakres portow i protokol:
+podman run -d --name port-bind2 -p 172.25.250.9:8180-8280:80-180/udp  quay.io/redhattraining/httpd-parent:latest
+
+Jesli otwieramy 100 portow: od 8180-8280, to w kontenerze tez musi byc 100 portow: od 80 do 180!!!!!
+
+
+Volumes:
+========
+unshare i SELinux z opcja :Z przy wolumenie dyskowym:
+https://www.redhat.com/sysadmin/user-namespaces-selinux-rootless-containers
+np: 
+podman run --rm -v $HOME/mysql-data:/var/lib/mysql/data:Z -e MYSQL_USER=user -e MYSQL_PASSWORD=pass -e MYSQL_DATABASE=db -p 3306:3306 mariadb/server
+----
+
+podman unshare ls -ld mysqldb/items/
+
+podman run --name persist-db -d -v /home/student/dbfiles:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 registry.redhat.io/rhel8/mysql-80:1
+
+podman cp /home/student/DO180/labs/manage-lifecycle/db.sql mysql-basic:/
+podman exec -it mysql-basic /bin/bash -c 'mysql -uuser1 -pmypa55 items </db.sql'
+
+TAGI:
+=====
+podman search mysql --list-tags --limit 5
+podman search mysql --filter is-official=true
+podman search mysql --filter stars=5000 -> https://hub.docker.com/search?q=mysql (ilosc gwiazdek)
+
+
 curl -Ls https://quay.io/v2/redhattraining/httpd-parent/tags/list | python3 -m json.tool
 
 curl -u='5883743|PrzemyslawKuznickiLP':'ey...dsferg' -Ls "https://sso.redhat.com/auth/realms/rhcc/protocol/redhat-docker-v2/auth?service=docker-registry" | python3 -m json.tool
